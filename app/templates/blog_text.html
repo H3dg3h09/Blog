@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BlogMini</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../static/css/config.css"/>
+    <link rel="stylesheet" href="../static/css/style.css"/>
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/md5.js"></script>
+    <script src="../static/js/header.js"></script>
+    <script src="../static/js/config.js"></script>
+</head>
+<body>
+
+    <header class="header">
+
+    </header>
+    <div class="container">
+        <div class="row-fluid" id="content">
+            <div class="col-md-8 blog-l">
+
+            </div>
+            <div class="col-md-4 blog-r">
+
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $('.header').html(headerHTML);
+    //$('body').append(blogModal)
+    var blog_text =
+            '<div class="card">' +
+                '<p class="blog-text-title">我是标题我是标题我是标题</p>' +
+                '<div class="blog-text-mark clearfix">' +
+                    '<div class="pull-left">' +
+                        '<span class="label label-warning">原创</span>' +
+                        '<span class="label label-info">生活杂记</span>' +
+
+                    '</div>' +
+                    '<div class="pull-right">' +
+                        '<span class="label label-primary">浏览23</span>' +
+                        '<span class="label label-success">评论4</span>' +
+                    '</div>' +
+                '</div>' +
+                '<span class="blog-text-abstract">我是内容,都很舒服是凤凰私防护服四月返回撤诉费呼死你楚虽三户市场部艾师傅仇杀队是会死UC和覅发挥不舒服度。</span>' +
+                '<li class="divider"></li>' +
+                '<span class=""> 有个小孩叫方仲永，出生在一个农人家庭。他家里祖祖辈辈都是种田人，没有一个文化人。他长到5岁了，还从未见过纸墨笔砚是个什么模样。可是有一天，方仲永突然哭着向家里人要纸墨笔砚，说想写诗。他父亲感到十分惊讶，马上从邻居那里借来笔墨纸砚，方仲永拿起笔便写了4句诗，而且还给诗写了个题目。同乡的几个读书人知道了这件事，都跑到方仲永家来看，一致认为他写得不错。于是这件事很快传开了，知道的人不免个个称奇。从此，方仲永家热闹起来，经常有人来家玩，有的当场出题要小仲永作诗。小仲永不论什么题目，他都能立刻成诗，而且内容深刻雅致，文采绚丽多姿，得到众人赞赏。不久，方仲永的天生奇才传到了县里，引起了很大震动，人们都认为他是个神童。县里那些名流、富人，十分欣赏方仲永，连他父亲的地位也随着提高了不少。那些人对方仲永的父亲另眼相看，还经常拿钱帮助他。这样一来，方仲永的父亲便认为这是件有利可图的好事情，于是放弃了让方仲永上学读书的念头，而是每天带着方仲永轮流拜访县里的那些名流、富人，找机会表现方仲永的作诗天才，以博得那些人的夸赞和奖励。这样一来，神童渐渐才思不济，久而久之，由于只一味凭着一点“天才”而没有后天的再学习，方仲永终至每况愈下。到十二三岁时，作的诗比以前大为逊色，前来与他谈诗的人感到很是失望。到了二十岁时，他的才华已全部消失，跟一般人并无什么不同，人们都遗憾地摇着头，可惜一个天资聪颖的少年终于变成了一个平庸的人。方仲永的通达聪慧，是先天得到的。他的天赋，比一般有才能的人要优秀得多;但最终成为一个平凡的人，是因为他后天所受的教育还没有达到要求。他得到的天资是那样的好，没有受到正常的后天教育，尚且成为平凡的人;那么，现在那些本来就不天生聪明，本来就是平凡的人，又不接受后天的教育，难道成为普通人就为止了吗？故事寓意：可见，一个人光有先天的智慧而不注重后天的学习是不行的，不注意接受新知识，到头来只会落在别人后面。这个故事借仲永为例，告诫人们决不可单纯依靠天资而不去学习新知识，必须注重后天的教育和学习，强调了后天教育和学习对成才的重要性。</span>' +
+            '</div>';
+
+    $('.blog-l').append(blog_text)
+</script>
+</html>

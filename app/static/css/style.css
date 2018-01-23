@@ -1,0 +1,67 @@
+body{
+    background:url('../image/background.jpg');
+    background-size:cover;
+}
+
+/* css for header*/
+.header-title{ padding-top: 20px; padding-bottom: 15px;}
+.header-title p{ font-size: 26px; color:#337ab7;}
+.header-title span{ display: inline-block;font-size: 16px; margin-top: 16px;}
+.title-nav{ width: 100%;background: #000;}
+.navbar-inverse .navbar-nav>li>a{ font-size: 13px;}
+/* css for login-box*/
+.login-box{
+   padding: 5px 30px;
+    text-align: center;
+}
+.login-box input{
+    width: 280px;
+    margin: 15px auto;
+
+}
+.login-box #blog-login-admin{ width: 80px; margin-bottom: 10px;}
+
+
+/* css for blog-text*/
+.blog-text-item, .card{
+    margin: 20px auto;
+    padding: 20px 20px;
+    background: #fff;
+    border-radius: 5px;
+}
+.blog-text-title{
+    color: #337ab7;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.blog-text-mark .label{
+    margin: 0 5px;
+}
+.blog-text-abstract{
+    display:inline-block;
+    font-size: 14px;
+    line-height: 20px;
+    margin-top: 20px;
+}
+.blog-r p{
+    margin: 8px 0;
+    font-size: 13px;
+}
+.blogs-care span{
+    display: inline-block;
+    margin: 5px 6px;
+}
+
+
+
+/*css for general*/
+p.blogs-title{
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size:15px;
+    font-weight:600;
+}
+.text-theme{
+    color: #337ab7;
+}
