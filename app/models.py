@@ -109,22 +109,24 @@ class Article(db.Model):
     content = db.Column(db.Text)
     summary = db.Column(db.Text)
     create_time = db.Column(db.DateTime, index=True,
-                            default=datetime)
+                            default=datetime.today)
     update_time = db.Column(db.DateTime, index=True,
-                            default=datetime )
+                            default=datetime.today )
     num_of_view = db.Column(db.Integer, default=0)
     articleType_id = db.Column(db.Integer, db.ForeignKey('articleTypes.id'))
-    # source_id = db.Column(db.Integer, db.ForeignKey('sources.id'))
-    # comments = db.relationship('Comment', backref='article', lazy='dynamic')
+    source_id = db.Column(db.Integer, db.ForeignKey('sources.id'))
+    comments = db.relationship('Comment', backref='article', lazy='dynamic')
+
     @staticmethod
     def generate_fake(count=100):
         from sqlalchemy.exc import IntegrityError
         from random import seed, randint
-        import ForgeryPy3
+        import forgery_py
 
         seed()
         articleType_count = ArticleType.query.count()
         source_count = Source.query.count()
+
         for i in range(count):
             aT = ArticleType.query.offset(randint(0, articleType_count - 1)).first()
             s = Source.query.offset(randint(0, source_count - 1)).first()
@@ -152,7 +154,9 @@ class Comment(db.Model):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    author_email = db.Column(db.String(64))
+    timestamp = db.Column(db.DateTime, default=datetime.today)
+    article_id = db.Column(db.Integer, db.ForeignKey('articles.id'))
     avatar_hash = db.Column(db.String(32))
     disabled = db.Column(db.Boolean, default=False)
     comment_type = db.Column(db.String(64), default='comment')
@@ -185,7 +189,6 @@ class Comment(db.Model):
             a = Article.query.offset(randint(0, article_count - 1)).first()
             c = Comment(content=forgery_py.lorem_ipsum.sentences(randint(3, 5)),
                         timestamp=forgery_py.date.date(True),
-                        author_name=forgery_py.internet.user_name(True),
                         author_email=forgery_py.internet.email_address(),
                         article=a)
             db.session.add(c)
@@ -204,11 +207,10 @@ class Comment(db.Model):
         for i in range(count):
             followed = Comment.query.offset(randint(0, comment_count - 1)).first()
             c = Comment(content=forgery_py.lorem_ipsum.sentences(randint(3, 5)),
-                        timestamp=forgery_py.date.date(True),
-                        author_name=forgery_py.internet.user_name(True),
                         author_email=forgery_py.internet.email_address(),
+                        timestamp=forgery_py.date.date(True),
                         article=followed.article, comment_type='reply',
-                        reply_to=followed.author_name)
+                        )
             f = Follow(follower=c, followed=followed)
             db.session.add(f)
             db.session.commit()
@@ -223,6 +225,7 @@ class Comment(db.Model):
     def followed_name(self):
         if self.is_reply():
             return self.followed.first().followed.author_name
+
 
 class Menu(db.Model):
     """导航栏内容"""
@@ -274,3 +277,25 @@ class BlogInfo(db.Model):
                              navbar='inverse')
         db.session.add(blog_info)
         db.session.commit()
+
+
+class Source(db.Model):
+    __tablename__ = 'sources'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
+    articles = db.relationship('Article', backref='source', lazy='dynamic')
+
+    @staticmethod
+    def insert_sources():
+        sources = (u'原创',
+                   u'转载',
+                   u'翻译')
+        for s in sources:
+            source = Source.query.filter_by(name=s).first()
+            if source is None:
+                source = Source(name=s)
+            db.session.add(source)
+        db.session.commit()
+
+    def __repr__(self):
+        return '<Source %r>' % self.name

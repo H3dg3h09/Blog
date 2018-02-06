@@ -3,7 +3,7 @@ from app import create_app, db
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
 from app.models import Article, ArticleType, User,\
-    Menu, Comment, BlogInfo
+    Menu, Comment, BlogInfo, Source
 
 app = create_app()
 manager = Manager(app)
@@ -14,7 +14,7 @@ manager.add_command('db', MigrateCommand)
 def deploy(deploy_type):
     from flask_migrate import upgrade
     from app.models import Article, ArticleType, User,\
-        Menu, Comment, BlogInfo
+        Menu, Comment, BlogInfo, Source
 
     # upgrade database to the latest version
     #upgrade()
@@ -41,12 +41,13 @@ def deploy(deploy_type):
         Menu.insert_menus()
         # step_2:insert articleTypes
         ArticleType.insert_articleTypes()
+        Source.insert_sources()
         # step_3:generate random articles
         Article.generate_fake(100)
         # step_4:generate random comments
         Comment.generate_fake(300)
         # step_5:generate random replies
-        Comment.generate_fake_replies(100)
+        # Comment.generate_fake_replies(100)
         # step_4:generate random comments
         Comment.generate_fake(300)
 
