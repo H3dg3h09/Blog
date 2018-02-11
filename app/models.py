@@ -14,6 +14,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
     avatar_hash = db.Column(db.String(32))
+    contents = db.relationship('Comment', backref='User', lazy='dynamic')
 
     @staticmethod
     def insert_admin(email, username, password):
@@ -47,6 +48,23 @@ class User(UserMixin, db.Model):
 
         return '{url}/{hash}?s={size}&d={default}&r={rating}'.format(
             url=url, hash=hash, size=size, default=default, rating=rating)
+
+    @staticmethod
+    def generate_fake(count=100):
+        from random import seed, randint
+        import forgery_py
+
+        seed()
+
+        for i in range(count):
+            u = User(email=forgery_py.internet.email_address(),
+                     username=forgery_py.name.full_name(),
+                     password=generate_password_hash(forgery_py.basic.password()))
+            db.session.add(u)
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
 
     def __repr__(self):
         return '<User %r>' % self.name
@@ -154,6 +172,7 @@ class Comment(db.Model):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text)
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     author_email = db.Column(db.String(64))
     timestamp = db.Column(db.DateTime, default=datetime.today)
     article_id = db.Column(db.Integer, db.ForeignKey('articles.id'))
@@ -190,6 +209,7 @@ class Comment(db.Model):
             c = Comment(content=forgery_py.lorem_ipsum.sentences(randint(3, 5)),
                         timestamp=forgery_py.date.date(True),
                         author_email=forgery_py.internet.email_address(),
+                        author_id = randint(0, 100),
                         article=a)
             db.session.add(c)
         try:
@@ -206,8 +226,9 @@ class Comment(db.Model):
         comment_count = Comment.query.count()
         for i in range(count):
             followed = Comment.query.offset(randint(0, comment_count - 1)).first()
-            c = Comment(content=forgery_py.lorem_ipsum.sentences(randint(3, 5)),
+            c = Comment(content=randint(0,100),
                         author_email=forgery_py.internet.email_address(),
+                        author_id=randint(0,100),
                         timestamp=forgery_py.date.date(True),
                         article=followed.article, comment_type='reply',
                         )
@@ -299,3 +320,4 @@ class Source(db.Model):
 
     def __repr__(self):
         return '<Source %r>' % self.name
+

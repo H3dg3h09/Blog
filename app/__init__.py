@@ -4,11 +4,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from config import Config
 
-db = SQLAlchemy()
+db = SQLAlchemy(session_options={'autocommit': False,
+                                         'autoflush': False,})
 db.Model.__table_args__ = {
     'mysql_engine': 'InnoDB',
     'mysql_charset': 'utf8'
 }
+
 
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'

@@ -17,7 +17,7 @@ def deploy(deploy_type):
         Menu, Comment, BlogInfo, Source
 
     # upgrade database to the latest version
-    #upgrade()
+   # upgrade()
 
     if deploy_type == 'product':
         # step_1:insert basic blog info
@@ -42,12 +42,14 @@ def deploy(deploy_type):
         # step_2:insert articleTypes
         ArticleType.insert_articleTypes()
         Source.insert_sources()
+        # generate User
+        User.generate_fake(100)
         # step_3:generate random articles
         Article.generate_fake(100)
         # step_4:generate random comments
         Comment.generate_fake(300)
         # step_5:generate random replies
-        # Comment.generate_fake_replies(100)
+        Comment.generate_fake_replies(100)
         # step_4:generate random comments
         Comment.generate_fake(300)
 
