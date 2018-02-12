@@ -28,8 +28,9 @@ def get_article(id):
     return render_template('blog_text.html', User=User, article=article, source=source)
 
 
-@main.route('/content/<int:article_id>')
-def get_countent(article_id):
+@main.route('/content', methods=['GET', 'POST'])
+def get_countent():
+    article_id = request.args.get('article_id')
     cont = db.session.query(Comment.content, Comment.timestamp, Comment.avatar_hash, User.username).join(User, User.id==Comment.author_id, isouter=True).filter(Comment.article_id == article_id).all()
     res = []
     for i in cont:
@@ -43,4 +44,16 @@ def get_countent(article_id):
     return jsonify(json.dumps(res))
 
 
+@main.route('/login', methods=["POST"])
+def login():
+    """Login in"""
+    email = request.form.get("email", type=str, default=None)
+    password = request.form.get("password", type=str, default=None)
 
+    user = User.query.filter_by(email=email).first()
+    is_right = user.check_password(password) if user else False
+
+    res = {'success': is_right,
+           'message': 'Welcome, {}'.format(user.username) if is_right else 'Your email or password is wrong!'}
+
+    return jsonify(json.dumps(res))
