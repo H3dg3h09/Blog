@@ -12,7 +12,30 @@ import json
 
 @main.route('/')
 def home_page():
+
     return render_template('index.html')
+
+
+@main.route('/article_list', methods=['GET'])
+def get_article_list():
+    page = request.args.get('page', 1, type=int)
+    article_type = request.args.get('type' ,type=int)
+    article_source = request.args.get('source', type=int)
+
+    data = Article.query.order_by(Article.create_time.desc()).paginate(page, error_out=False)
+    res = []
+
+    for i in data:
+        one = {
+            'title': i.title,
+            'summary': i.summary,
+            'create_time': i.create_time,
+            'view_num': i.num_of_view,
+            'update_time': i.update_time
+        }
+        res.append(one)
+
+    return jsonify(json.dumps(res))
 
 
 @main.route('/article/<int:id>', methods=['GET'])
@@ -57,3 +80,5 @@ def login():
            'message': 'Welcome, {}'.format(user.username) if is_right else 'Your email or password is wrong!'}
 
     return jsonify(json.dumps(res))
+
+

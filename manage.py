@@ -49,9 +49,9 @@ def deploy(deploy_type):
         # step_4:generate random comments
         Comment.generate_fake(300)
         # step_5:generate random replies
-        Comment.generate_fake_replies(100)
+        # Comment.generate_fake_replies(100)
         # step_4:generate random comments
-        Comment.generate_fake(300)
+        # Comment.generate_fake(300)
 
 @manager.command
 def init_db():

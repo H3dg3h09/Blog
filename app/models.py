@@ -14,8 +14,6 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
     avatar_hash = db.Column(db.String(32))
-    contents = db.relationship('Comment', backref='User', lazy='dynamic')
-
     @staticmethod
     def insert_admin(email, username, password):
         user = User(email=email, username=username, password=password)
@@ -31,6 +29,7 @@ class User(UserMixin, db.Model):
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
+
         return check_password_hash(self.password_hash, password)
 
     def __init__(self, **kwargs):
@@ -38,6 +37,7 @@ class User(UserMixin, db.Model):
         if self.email is not None and self.avatar_hash is None:
             self.avatar_hash = hashlib.md5(
                 self.email.encode('utf-8')).hexdigest()
+
 
     def set_url(self, size=40, default='identicon', rating='g'):
         url = os.environ.get('WEB_RUL','http://127.0.0.1') + \
@@ -172,7 +172,7 @@ class Comment(db.Model):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text)
-    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    author_id = db.Column(db.Integer)
     author_email = db.Column(db.String(64))
     timestamp = db.Column(db.DateTime, default=datetime.today)
     article_id = db.Column(db.Integer, db.ForeignKey('articles.id'))
@@ -208,33 +208,34 @@ class Comment(db.Model):
             a = Article.query.offset(randint(0, article_count - 1)).first()
             c = Comment(content=forgery_py.lorem_ipsum.sentences(randint(3, 5)),
                         timestamp=forgery_py.date.date(True),
+                        author_id = randint(0,100),
                         author_email=forgery_py.internet.email_address(),
-                        author_id = randint(0, 100),
                         article=a)
             db.session.add(c)
         try:
             db.session.commit()
-        except:
+        except Exception as e:
+            print("error:\n{}".format(e))
             db.session.rollback()
 
-    @staticmethod
-    def generate_fake_replies(count=100):
-        from random import seed, randint
-        import forgery_py
-
-        seed()
-        comment_count = Comment.query.count()
-        for i in range(count):
-            followed = Comment.query.offset(randint(0, comment_count - 1)).first()
-            c = Comment(content=randint(0,100),
-                        author_email=forgery_py.internet.email_address(),
-                        author_id=randint(0,100),
-                        timestamp=forgery_py.date.date(True),
-                        article=followed.article, comment_type='reply',
-                        )
-            f = Follow(follower=c, followed=followed)
-            db.session.add(f)
-            db.session.commit()
+    # @staticmethod
+    # def generate_fake_replies(count=100):
+    #     from random import seed, randint
+    #     import forgery_py
+    #
+    #     seed()
+    #     comment_count = Comment.query.count()
+    #     for i in range(count):
+    #         followed = Comment.query.offset(randint(0, comment_count - 1)).first()
+    #         c = Comment(content=forgery_py.lorem_ipsum.sentences(randint(3, 5)),
+    #                     author_email=forgery_py.internet.email_address(),
+    #                     timestamp=forgery_py.date.date(True),
+    #                     author_id = randint(0,100),
+    #                     article=followed.article, comment_type='reply',
+    #                     )
+    #         f = Follow(follower=c, followed=followed)
+    #         db.session.add(f)
+    #         db.session.commit()
 
     def is_reply(self):
         if self.followed.count() == 0:
@@ -320,4 +321,3 @@ class Source(db.Model):
 
     def __repr__(self):
         return '<Source %r>' % self.name
-
