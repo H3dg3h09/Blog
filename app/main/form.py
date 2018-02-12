@@ -1,7 +1,7 @@
 #-*- coding:UTF-8 -*-
 from flask_wtf import Form
 from wtforms import SelectField, StringField, TextAreaField, \
-    SubmitField, PasswordField
+    SubmitField, PasswordField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 
@@ -30,3 +30,11 @@ class ChangePwdForm(Form):
                                              EqualTo('new_password2', message=u'两次密码不一致!')])
     new_password2 = PasswordField(u'确认新密码',
                                   validators=[DataRequired()])
+
+
+class LoginForm(Form):
+    email = SelectField(u'email',
+                        validators=[DataRequired(), Length(1, 64), Email()])
+    password = PasswordField(u'password',
+                              validators=[DataRequired()])
+    remember_me = BooleanField('remember_me', default=False)

@@ -57,7 +57,13 @@ def deploy(deploy_type):
 def init_db():
     db.create_all(app=app)
 
+@manager.command
+def temp():
+    from werkzeug.security import generate_password_hash, check_password_hash
 
+    u = User(username='test', email='test@1.com', password=generate_password_hash('123'))
+    db.session.add(u)
+    db.session.commit()
 
 if __name__ == '__main__':
     manager.run()
