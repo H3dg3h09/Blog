@@ -52,8 +52,28 @@ body{
     display: inline-block;
     margin: 5px 6px;
 }
+.blog-talks-item img{
+    float:left;
+    width:40px;
+    height: 40px;
+}
+.blog-talks-item .blog-talks-conment{
+    float:left;
+    display: inline-block;
+}
+.blog-talks-conment .talks-name{
+    font-weight: 600;
+    font-size: 18px;
+    color:#337ab7;
+}
+.blog-talks-conment .talks-conment{
+    font-size: 16px;
+    word-break: break-all;
 
-
+}
+.talks-btn{
+    margin: 5px 0;
+}
 
 /*css for general*/
 p.blogs-title{
@@ -64,4 +84,10 @@ p.blogs-title{
 }
 .text-theme{
     color: #337ab7;
+}
+.divider{
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+    background-color: #e5e5e5;
 }

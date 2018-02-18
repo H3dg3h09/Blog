@@ -1,0 +1,8 @@
+    import '../css/bootstrap.min.css'
+    import '../css/config.css'
+    import '../css/style.css'
+    import './jquery.min.js'
+    import './bootstrap.min.js'
+    import './md5.js'
+    import './config.js'
+    import './header.js'

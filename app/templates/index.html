@@ -25,7 +25,25 @@
         <div class="container">
             <div class="row-fluid" id="content">
                 <div class="col-md-8 blog-l">
-
+                     <ul>
+                        {% for one in articles.items %}
+                        <li class="blog-text-item card">
+                            <p class="blog-text-title"><a href="/article/{{ one.id }}" target="_blank">{{ one.title }}</a></p>
+                            <div class="blog-text-mark clearfix">
+                                <div class="pull-left">
+                                    <span class="label label-warning">{{ one.article_name }}</span>
+                                    <span class="label label-info">{{ one.source_name }}</span>
+                                    <span class="label label-default">{{ one.create_time }}</span>
+                                </div>
+                                <div class="pull-right">
+                                    <span class="label label-primary">浏览({{ one.num_of_view }})</span>
+                                    <span class="label label-success">评论(4)</span>
+                                </div>
+                            </div>
+                            <span class="blog-text-abstract">{{ one.summary }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
                 </div>
                 <div class="col-md-4 blog-r">
 
@@ -38,71 +56,9 @@
 </body>
 <script>
     $('.header').html(headerHTML);
-    $('body').append(blogModal)
+    $('body').append(blogModal);
     //左侧blog博文
-    var blogText =
-            '<ul>' +
-                '<li class="blog-text-item card">' +
-                    '<p class="blog-text-title">我是标题我是标题我是标题</p>' +
-                    '<div class="blog-text-mark clearfix">' +
-                        '<div class="pull-left">' +
-                            '<span class="label label-warning">原创</span>' +
-                            '<span class="label label-info">生活杂记</span>' +
-                            '<span class="label label-default">2017/01/11</span>' +
-                        '</div>' +
-                        '<div class="pull-right">' +
-                            '<span class="label label-primary">浏览23</span>' +
-                            '<span class="label label-success">评论4</span>' +
-                        '</div>' +
-                    '</div>' +
-                    '<span class="blog-text-abstract">我是内容,都很舒服是凤凰私防护服四月返回撤诉费呼死你楚虽三户市场部艾师傅仇杀队是会死UC和覅发挥不舒服度。</span>' +
-                '</li>' +
-                '<li class="blog-text-item">' +
-                    '<p class="blog-text-title">我是标题我是标题我是标题</p>' +
-                    '<div class="blog-text-mark clearfix">' +
-                        '<div class="pull-left">' +
-                            '<span class="label label-warning">原创</span>' +
-                            '<span class="label label-info">生活杂记</span>' +
-                            '<span class="label label-default">2017/01/11</span>' +
-                        '</div>' +
-                        '<div class="pull-right">' +
-                            '<span class="label label-primary">浏览23</span>' +
-                            '<span class="label label-success">评论4</span>' +
-                        '</div>' +
-                    '</div>' +
-                    '<span class="blog-text-abstract">我是内容,都很舒服是凤凰私防护服四月返回撤诉费呼死你楚虽三户市场部艾师傅仇杀队是会死UC和覅发挥不舒服度。</span>' +
-                '</li>' +
-                '<li class="blog-text-item">' +
-                    '<p class="blog-text-title">我是标题我是标题我是标题</p>' +
-                    '<div class="blog-text-mark clearfix">' +
-                        '<div class="pull-left">' +
-                            '<span class="label label-warning">原创</span>' +
-                            '<span class="label label-info">生活杂记</span>' +
-                            '<span class="label label-default">2017/01/11</span>' +
-                        '</div>' +
-                        '<div class="pull-right">' +
-                            '<span class="label label-primary">浏览23</span>' +
-                            '<span class="label label-success">评论4</span>' +
-                        '</div>' +
-                    '</div>' +
-                    '<span class="blog-text-abstract">我是内容,都很舒服是凤凰私防护服四月返回撤诉费呼死你楚虽三户市场部艾师傅仇杀队是会死UC和覅发挥不舒服度。</span>' +
-                '</li>' +
-                '<li class="blog-text-item">' +
-                    '<p class="blog-text-title">我是标题我是标题我是标题</p>' +
-                    '<div class="blog-text-mark clearfix">' +
-                        '<div class="pull-left">' +
-                            '<span class="label label-warning">原创</span>' +
-                            '<span class="label label-info">生活杂记</span>' +
-                            '<span class="label label-default">2017/01/11</span>' +
-                        '</div>' +
-                        '<div class="pull-right">' +
-                                '<span class="label label-primary">浏览23</span>' +
-                                '<span class="label label-success">评论4</span>' +
-                        '</div>' +
-                    '</div>' +
-                    '<span class="blog-text-abstract">我是内容,都很舒服是凤凰私防护服四月返回撤诉费呼死你楚虽三户市场部艾师傅仇杀队是会死UC和覅发挥不舒服度。</span>' +
-                '</li>' +
-            '</ul>';
+
     var blog_count =
             '<ul>' +
                 '<li class="blogs-count card">' +
@@ -129,7 +85,6 @@
                     '<p class="">个人博客网站：<a class="text-theme" href="www.baidu.com">www.baidu.com</a></p>'+
                 '</li>' +
             '</ul>';
-    $('.blog-l').append(blogText);
     $('.blog-r').append(blog_count)
 </script>
 </html>

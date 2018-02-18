@@ -9,10 +9,33 @@ from ..models import ArticleType, Article, User, Source,\
 from .form import SignInForm, ChangePwdForm, CommonForm, LoginForm
 from .. import db, login_manager
 
+#
+# @main.route('/')
+# def home_page():
+#     return render_template('index.html')
 
 @main.route('/')
 def home_page():
-    return render_template('index.html')
+
+    page = request.args.get('page', 1, type=int)
+    article_type = request.args.get('type', type=int)
+    article_source = request.args.get('source', type=int)
+
+    data = db.session.query(Article.id, Article.title,Article.create_time, Article.summary,
+                            Article.num_of_view, ArticleType.name.label('article_name'),
+                            Source.name.label('source_name')).\
+        join(ArticleType, ArticleType.id == Article.articleType_id, isouter=True).\
+        join(Source, Source.id == Article.source_id, isouter=True)
+
+    if article_type:
+        data = data.filter(Article.articleType_id == article_type)
+    if article_source:
+        data = data.filter(Article.source_id == article_source)
+
+    data = data.order_by(Article.create_time.desc()).paginate(
+        page, per_page=current_app.config['ARTICLES_PER_PAGE'], error_out=False)
+
+    return render_template('index.html', articles = data)
 
 
 @main.route('/article_list', methods=['GET'])
@@ -47,33 +70,32 @@ def get_article_list():
     return jsonify(res)
 
 
-@main.route('/article/<int:id>', methods=['GET'])
-def get_article(id):
-    article = Article.query.get_or_404(id)
+@main.route('/article/<int:article_id>', methods=['GET'])
+def get_article(article_id):
+    article = Article.query.get_or_404(article_id)
 
     if article:
         source = Source.query.get_or_404(article.source_id)
         article.content = str(article.content).split(r'\n')
     else:
-        source = Source()
+        return redirect('/')
 
-    return render_template('blog_text.html', User=User, article=article, source=source)
+    # article_id = request.args.get('article_id')
+    com = db.session.query(Comment.content, Comment.timestamp, Comment.avatar_hash, User.username).join(User,
+                                                                                                         User.id == Comment.author_id,
+                                                                                                         isouter=True).filter(
+        Comment.article_id == article_id).all()
+    for i in com:
+        print(i.content)
+
+    return render_template('blog_text.html', User=User, article=article, source=source, com=com)
 
 
-@main.route('/content', methods=['GET', 'POST'])
-def get_countent():
+@main.route('/comment', methods=['GET', 'POST'])
+def get_comment():
     article_id = request.args.get('article_id')
     cont = db.session.query(Comment.content, Comment.timestamp, Comment.avatar_hash, User.username).join(User, User.id==Comment.author_id, isouter=True).filter(Comment.article_id == article_id).all()
-    res = []
-    for i in cont:
-        one = {
-            'content': i.content,
-            'autor': i.username,
-            'time': str(i.timestamp)
-        }
-        res.append(one)
 
-    return jsonify(res)
 
 
 @login_manager.user_loader

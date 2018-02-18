@@ -40,18 +40,71 @@
                 <span class="blog-text-abstract">{{ article.summary }}</span>
                 <li class="divider"></li>
                     <span class="">
-                        {% for i in article.content: %}
+                        {% for i in article.content %}
                         <p>{{i}}</p>
                         {% endfor %}
                     </span>
 
-                <!--<span class="">{{ article.content }}</span>-->
             </div>
                 {% endblock %}
             </div>
             <div class="col-md-4 blog-r">
+<ul class="clearfix">
+                    <li class="blogs-count card">
+                        <p class="blogs-title">博客统计</p>
+                        <p class="">访问量：<span class="blogs-invitors badge badge-default">11</span></p>
+                        <p class="">博文统计：<span class="blogs-number badge badge-default">22</span></p>
+                        <span class="text-primary">原创：</span><span class="badge badge-default">11</span>
+                        <span class="text-primary">&emsp;翻译：</span><span class="badge badge-default">3</span>
+                        <span class="text-primary">&emsp;转载：</span><span class="badge badge-default">8</span>
+                    </li>
+                    <li class="blogs-care card">
+                        <p class="blogs-title">关注技术</p>
+                        <span class="label label-primary">Python</span>
+                        <span class="label label-info">Linux</span>
+                        <span class="label label-success">Web HTML</span><br/>
+                        <span class="label label-danger">Javascript</span>
+                        <span class="label label-warning">MySql</span>
 
+                    </li>
+                    <li class="blogs-care card">
+                        <p class="blogs-title">联系我</p>
+                        <p class="">个人博客网站：<a class="text-theme" href="www.baidu.com">www.baidu.com</a></p>
+                        <p class="">个人博客网站：<a class="text-theme" href="www.baidu.com">www.baidu.com</a></p>
+                        <p class="">个人博客网站：<a class="text-theme" href="www.baidu.com">www.baidu.com</a></p>
+                    </li>
+                </ul>
             </div>
+             <div class="row-fluid" id="blog-talks">
+            <div class="col-md-10 card" style="margin:0 auto;">
+                    <p class="divider"></p>
+                    <p class="title" style="font-size: 22px;"><span class="glyphicon glyphicon-comment"></span>评论</p>
+                    <ul class="clearfix">
+                        {% for one in com %}
+                        <li class="divider"></li>
+                        <li class="list-item blog-talks-item">
+                           <span class="col-md-1"><img src="../static/image/user_img.png" /></span>
+                            <span class="blog-talks-conment col-md-11">
+                                <span class="talks-name">{{ one.username }}</span><br/>
+                                <span class="talks-conment">
+                                    {{ one.content }}
+                                </span><br/>
+                                <span class="talks-btn pull-right">
+                                    <button class="btn btn-warning"><span class="glyphicon glyphicon-remove-sign">屏蔽</span></button>
+                                    <button class="btn btn-success hidden"><span class="glyphicon glyphicon-ok-sign">恢复</span></button>
+                                    <button class="btn btn-danger"><span class="glyphicon glyphicon-trash">删除</span></button>
+                                    <button class="btn btn-info"><span class="glyphicon glyphicon-comment">回复</span></button>
+                                </span><br/>
+                                <span class="talks-to-talks hidden">
+                                    <textarea class="form-control" placeholder="回复："   rows="3"></textarea>
+                                </span>
+                            </span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+            </div>
+
+        </div>
         </div>
     </div>
 </body>
