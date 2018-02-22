@@ -35,7 +35,7 @@ def home_page():
     data = data.order_by(Article.create_time.desc()).paginate(
         page, per_page=current_app.config['ARTICLES_PER_PAGE'], error_out=False)
 
-    return render_template('index.html', articles = data)
+    return render_template('index.html', articles=data, currentPage=data.tat, totalPages='')
 
 
 @main.route('/article_list', methods=['GET'])
@@ -66,8 +66,10 @@ def get_article_list():
             'source_id': i.source_id
         }
         res.append(one)
-
-    return jsonify(res)
+    dic_res = {'data': res,
+               'currentPage':data.page,
+               'totalPages': data.total}
+    return jsonify(dic_res)
 
 
 @main.route('/article/<int:article_id>', methods=['GET'])
