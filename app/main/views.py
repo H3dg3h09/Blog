@@ -35,7 +35,7 @@ def home_page():
     data = data.order_by(Article.create_time.desc()).paginate(
         page, per_page=current_app.config['ARTICLES_PER_PAGE'], error_out=False)
 
-    return render_template('index.html', articles=data, currentPage=data.tat, totalPages='')
+    return render_template('index.html', articles=data, currentPage=data.page, totalPages=data.total)
 
 
 @main.route('/article_list', methods=['GET'])
