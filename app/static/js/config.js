@@ -99,19 +99,18 @@ function article_list(){
                                 type:'get',
                                 data:{'page':page,'count':10},
                                 success:function (callback) {
-                                        console.log(callback)
-                                        append_blog_list(res.data)
+                                        append_blog_list(callback.data,1)
 
                                     }
                             })
                         }
                 });
-                append_blog_list(res.data)
+                append_blog_list(res.data,0)
         }
     })
 }
 //append_list
-function append_blog_list(data){
+function append_blog_list(data,type){
     var strLi = ''
     $.each(data,function(idx,ele){
         strLi +=
@@ -131,5 +130,7 @@ function append_blog_list(data){
             '<span class="blog-text-abstract">'+ele.summary+'</span>' +
         '</li>' ;
     })
-    $('.blog_list').empty().append(strLi)
+    
+        $('.blog_list').empty().append(strLi)
+
 }
