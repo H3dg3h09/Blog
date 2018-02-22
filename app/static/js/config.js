@@ -99,14 +99,9 @@ function article_list(){
                                 type:'get',
                                 data:{'page':page,'count':10},
                                 success:function (callback) {
-                                    console.log(111)
                                         console.log(callback)
                                         append_blog_list(res.data)
-                                        // $('tbody').empty();
-                                        // var page_count=callback.page_count;
-                                        // var page_cont=callback.page_content;
-                                        // $('tbody').append(page_cont);
-                                        // $('#last_page').text(page_count)
+
                                     }
                             })
                         }
