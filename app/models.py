@@ -127,9 +127,9 @@ class Article(db.Model):
     content = db.Column(db.Text)
     summary = db.Column(db.Text)
     create_time = db.Column(db.DateTime, index=True,
-                            default=datetime.today)
+                            default=datetime.utcnow)
     update_time = db.Column(db.DateTime, index=True,
-                            default=datetime.today )
+                            default=datetime.utcnow)
     num_of_view = db.Column(db.Integer, default=0)
     articleType_id = db.Column(db.Integer, db.ForeignKey('articleTypes.id'))
     source_id = db.Column(db.Integer, db.ForeignKey('sources.id'))
