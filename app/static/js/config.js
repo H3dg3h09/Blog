@@ -60,3 +60,81 @@ function randomString(len) {
     }
     return pwd;
 }
+article_list();
+function article_list(){
+    var page = 1;
+    var type = ''//article_type
+    var source = ''//article_source;
+    var data = {
+        page:page,
+        type:type,
+        source:source
+    }
+    $.ajax({
+        type:'get',
+        data:data,
+        url:'/article_list',
+        success:function(res){
+            console.log(res);
+            var totalPages = res.totalPages;
+            $('.blog_list_pagination').bootstrapPaginator({
+                     currentPage: 1,
+                     totalPages:totalPages,
+                     size:"normal",
+                     bootstrapMajorVersion: 3,
+                     alignment:"right",
+                     numberOfPages:8,
+                     itemTexts: function (type, page, current) {
+                         switch (type) {
+                        case "first": return "首页";
+                        case "prev": return "上一页";
+                        case "next": return "下一页";
+                        case "last": return "末页";
+                        case "page": return page;
+                        }//默认显示的是第一页。
+                    },
+                        onPageClicked: function (event, originalEvent, type, page){//给每个页眉绑定一个事件，其实就是ajax请求，其中page变量为当前点击的页上的数字。
+                            $.ajax({
+                                url:'/article_list',
+                                type:'get',
+                                data:{'page':page,'count':10},
+                                success:function (callback) {
+                                    console.log(111)
+                                        console.log(callback)
+                                        append_blog_list(res.data)
+                                        // $('tbody').empty();
+                                        // var page_count=callback.page_count;
+                                        // var page_cont=callback.page_content;
+                                        // $('tbody').append(page_cont);
+                                        // $('#last_page').text(page_count)
+                                    }
+                            })
+                        }
+                });
+                append_blog_list(res.data)
+        }
+    })
+}
+//append_list
+function append_blog_list(data){
+    var strLi = ''
+    $.each(data,function(idx,ele){
+        strLi +=
+         '<li class="blog-text-item">' +
+            '<p class="blog-text-title">'+ele.title+'</p>' +
+            '<div class="blog-text-mark clearfix">' +
+                '<div class="pull-left">' +
+                    '<span class="label label-warning">原创</span>' +
+                    '<span class="label label-info">生活杂记</span>' +
+                    '<span class="label label-default">更新于'+ele.update_time+'</span>' +
+                '</div>' +
+                '<div class="pull-right">' +
+                    '<span class="label label-primary">浏览'+ele.view_num+'</span>' +
+                    '<span class="label label-success">评论4</span>' +
+                '</div>' +
+            '</div>' +
+            '<span class="blog-text-abstract">'+ele.summary+'</span>' +
+        '</li>' ;
+    })
+    $('.blog_list').empty().append(strLi)
+}

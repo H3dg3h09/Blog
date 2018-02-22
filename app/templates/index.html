@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../static/css/style.css"/>
     <script src="../static/js/jquery.min.js"></script>
     <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/bootstrap-paginator.js"></script>
     <script src="../static/js/md5.js"></script>
     <script src="../static/js/header.js"></script>
     <script src="../static/js/config.js"></script>
@@ -26,7 +27,8 @@
         <div class="container">
             <div class="row-fluid" id="content">
                 <div class="col-md-8 blog-l">
-
+                    <ul class="blog_list"></ul>
+                    <div class="pull-right"><ul class="blog_list_pagination pagination"></ul></div>
                 </div>
                 <div class="col-md-4 blog-r">
 
@@ -130,7 +132,7 @@
                     '<p class="">个人博客网站：<a class="text-theme" href="www.baidu.com">www.baidu.com</a></p>'+
                 '</li>' +
             '</ul>';
-    $('.blog-l').append(blogText);
+    //$('.blog-l').append(blogText);
     $('.blog-r').append(blog_count)
 </script>
 </html>
