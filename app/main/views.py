@@ -45,7 +45,12 @@ def get_article_list():
     article_type = request.args.get('type' ,type=int)
     article_source = request.args.get('source', type=int)
 
-    data = Article.query
+    data = db.session.query(Article.title, Article.summary,
+                            Article.create_time, Article.update_time, Article.id,
+                            Article.num_of_view,
+                            ArticleType.name.label('type_name'),
+                            Source.name.label('source_name'))
+
     if article_type:
         data = data.filter(Article.articleType_id == article_type)
     if article_source:
@@ -55,15 +60,17 @@ def get_article_list():
         page, per_page=current_app.config['ARTICLES_PER_PAGE'],error_out=False)
 
     res = []
+
     for i in data.items:
         one = {
+            'id': i.id,
             'title': i.title,
             'summary': i.summary,
             'create_time': i.create_time,
             'view_num': i.num_of_view,
             'update_time': i.update_time,
-            'articleType_id': i.articleType_id,
-            'source_id': i.source_id
+            'type_name': i.type_name,
+            'source_name': i.source_name,
         }
         res.append(one)
     dic_res = {'data': res,
