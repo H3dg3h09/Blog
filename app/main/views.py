@@ -103,7 +103,22 @@ def get_article(article_id):
 @main.route('/comment', methods=['GET', 'POST'])
 def get_comment():
     article_id = request.args.get('article_id')
-    cont = db.session.query(Comment.content, Comment.timestamp, Comment.avatar_hash, User.username).join(User, User.id==Comment.author_id, isouter=True).filter(Comment.article_id == article_id).all()
+    data = db.session.query( Comment.id, Comment.content, Comment.timestamp, Comment.disabled, User.username).filter(db.and_(Comment.article_id == article_id, User.id==Comment.author_id)).order_by(Comment.timestamp.desc()).all()
+
+    res = []
+    for i in data:
+        one = {
+            'id': i.id,
+            'content': i.content,
+            'timestamp': i.timestamp,
+            'username': i.username,
+            'disabled': i.disabled,
+        }
+        res.append(one)
+    dic_res = {'data': res,
+               'length': len(data)}
+
+    return jsonify(dic_res)
 
 
 
