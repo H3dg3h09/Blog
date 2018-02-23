@@ -60,8 +60,8 @@ function randomString(len) {
     }
     return pwd;
 }
-article_list();
-function article_list(){
+
+function article_list(){    
     var page = 1;
     var type = ''//article_type
     var source = ''//article_source;
@@ -75,7 +75,6 @@ function article_list(){
         data:data,
         url:'/article_list',
         success:function(res){
-            console.log(res);
             var totalPages = res.totalPages;
             $('.blog_list_pagination').bootstrapPaginator({
                      currentPage: 1,
@@ -99,13 +98,23 @@ function article_list(){
                                 type:'get',
                                 data:{'page':page,'count':10},
                                 success:function (callback) {
-                                        append_blog_list(callback.data,1)
+                                    if(callback.data.length){
+                                        append_blog_list(callback.data)
+                                    }else{
+                                        layer.msg('没有更多数据了！')
+                                    }
+                                     
 
                                     }
                             })
                         }
                 });
-                append_blog_list(res.data,0)
+                if(res.data.length){
+                    append_blog_list(res.data)
+                }else{
+                    layer.msg('没有更多数据了！')
+                }
+                append_blog_list(res.data)
         }
     })
 }
@@ -114,23 +123,80 @@ function append_blog_list(data,type){
     var strLi = ''
     $.each(data,function(idx,ele){
         strLi +=
-         '<li class="blog-text-item">' +
-            '<p class="blog-text-title">'+ele.title+'</p>' +
-            '<div class="blog-text-mark clearfix">' +
-                '<div class="pull-left">' +
-                    '<span class="label label-warning">原创</span>' +
-                    '<span class="label label-info">生活杂记</span>' +
-                    '<span class="label label-default">更新于'+ele.update_time+'</span>' +
+         '<li class="blog-text-item" data-article-id="'+ele.id+'">' +
+            '<a href="/article/'+ele.id+'" target="_blank">'+
+                '<p class="blog-text-title">'+ele.title+'</p>' +
+                '<div class="blog-text-mark clearfix">' +
+                    '<div class="pull-left">' +
+                        '<span class="label label-warning">原创</span>' +
+                        '<span class="label label-info">生活杂记</span>' +
+                        '<span class="label label-default">更新于'+ele.update_time+'</span>' +
+                    '</div>' +
+                    '<div class="pull-right">' +
+                        '<span class="label label-primary">浏览'+ele.view_num+'</span>' +
+                        '<span class="label label-success">评论4</span>' +
+                    '</div>' +
                 '</div>' +
-                '<div class="pull-right">' +
-                    '<span class="label label-primary">浏览'+ele.view_num+'</span>' +
-                    '<span class="label label-success">评论4</span>' +
-                '</div>' +
-            '</div>' +
-            '<span class="blog-text-abstract">'+ele.summary+'</span>' +
+                '<span class="blog-text-abstract">'+ele.summary+'</span>' +
+                '</a>'+
         '</li>' ;
     })
     
         $('.blog_list').empty().append(strLi)
 
 }
+
+//查看blog详情
+$('body').on('click','.blog-text-item',function(e){
+    var article_id = $(this).attr('data-article-id');
+    
+})
+//blog 加载评论
+function blog_comment(article_id){
+    $.ajax({
+        type:'post',
+        url:'/comment?article_id='+article_id,
+        success:function(res){
+            var strLi = '';
+            $.each(res.data,function(idx,ele){
+                strLi += 
+                '<li class="divider"></li>'+
+                '<li class="blog-talks-item clearfix">'+
+                '<span class="col-md-1"><img src="../static/image/user_img.png" /></span>'+
+                '<span class="blog-talks-conment col-md-11">'+
+                     '<span class="talks-name">'+ele.username+'</span><br/>'+
+                     '<span class="talks-conment">'+ele.content+'</span><br/>'+
+                     '<span class="talks-btn pull-right">'+
+                         '<button class="btn btn-warning"><span class="glyphicon glyphicon-remove-sign">屏蔽</span></button>&nbsp;'+
+                         '<button class="btn btn-success hidden"><span class="glyphicon glyphicon-ok-sign">恢复</span></button>&nbsp;'+
+                         '<button class="btn btn-danger"><span class="glyphicon glyphicon-trash">删除</span></button>&nbsp;'+
+                         '<button class="btn btn-info"><span class="glyphicon glyphicon-comment">回复</span></button>'+
+                     '</span><br/>'+
+                     '<span class="talks-to-talks hidden">'+
+                         '<textarea class="form-control" placeholder="回复："   rows="3"></textarea>'+
+                     '</span>'+
+                     
+                 '</span>'+
+             '</li>';
+                ;
+            })
+            $('.blog-talks-ul').empty().append(strLi);
+            if($('.blog-talks-ul .blog-talks-item').length>5){
+                $('.blog-talks-all').removeClass('hidden')
+            }
+            $('.blog-talks-ul .blog-talks-item:gt(4)').addClass('hidden')
+        }
+    })
+}
+//展开评论
+$('body').on('click','.talks-out',function(){
+    $('.blog-talks-ul .blog-talks-item').removeClass('hidden');
+    $('.talks-out').addClass('hidden');
+    $('talks-in').removeClass('hidden')
+})
+//收起评论
+$('body').on('click','.talks-in',function(){
+    $('.blog-talks-ul .blog-talks-item:gt(4)').addClass('hidden')
+    $('.talks-in').addClass('hidden');
+    $('talks-out').removeClass('hidden')
+})

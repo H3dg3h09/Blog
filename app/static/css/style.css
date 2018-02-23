@@ -31,7 +31,7 @@ body{
 }
 .blog-text-title{
     color: #337ab7;
-    font-size: 18px;
+    font-size: 22px;
     text-align: center;
     margin-bottom: 20px;
 }
@@ -44,6 +44,11 @@ body{
     line-height: 20px;
     margin-top: 20px;
 }
+p.blog_text_word{
+    font-size: 15   px; 
+    line-height: 20px;
+    word-break: keep-all;
+}
 .blog-r p{
     margin: 8px 0;
     font-size: 13px;
@@ -52,14 +57,17 @@ body{
     display: inline-block;
     margin: 5px 6px;
 }
+.blog-talks-item{
+    padding-top: 10px;
+}
 .blog-talks-item img{
     float:left;
     width:40px;
     height: 40px;
 }
 .blog-talks-item .blog-talks-conment{
-    float:left;
     display: inline-block;
+    float: left;  
 }
 .blog-talks-conment .talks-name{
     font-weight: 600;
@@ -67,7 +75,8 @@ body{
     color:#337ab7;
 }
 .blog-talks-conment .talks-conment{
-    font-size: 16px;
+    font-size: 14px;
+    line-height: 20px;
     word-break: break-all;
 
 }

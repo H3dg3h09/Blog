@@ -22,33 +22,33 @@
         <div class="row-fluid clearfix" id="conment">
             <div class="col-md-8 blog-l">
                 {% block article %}
-                <div class="card">
-                <p class="blog-text-title">{{ article.title }}</p>
-                <div class="blog-text-mark clearfix">
-                    <div class="pull-left">
-                        {% block source %}
-                        <span class="label label-warning">{{ source.name }}</span>
-                        {% endblock %}
-                        <!--<span class="label label-info">生活杂记</span>-->
+                <div class="card" style="padding-bottom:40px;">
+                    <p class="blog-text-title"></p>{{ article.title }}</p>
+                    <a class="hidden" id="article_id">{{ article.id }}</a>
+                    <div class="blog-text-mark clearfix">
+                        <div class="pull-left">
+                            {% block source %}
+                            <span class="label label-warning">{{ source.name }}</span>
+                            {% endblock %}
+                            <!--<span class="label label-info">生活杂记</span>-->
 
+                        </div>
+                        <div class="pull-right">
+                            <span class="label label-primary">浏览{{ article.num_of_view }}</span>
+                            <span class="label label-success">评论4</span>
+                        </div>
                     </div>
-                    <div class="pull-right">
-                        <span class="label label-primary">浏览{{ article.num_of_view }}</span>
-                        <span class="label label-success">评论4</span>
-                    </div>
-                </div>
-                <span class="blog-text-abstract">{{ article.summary }}</span>
-                <li class="divider"></li>
-                    <span class="">
-                        {% for i in article.content: %}
-                        <p>{{i}}</p>
-                        {% endfor %}
-                    </span>
-                    <button type="button" class="btn btn-default btn-xs  edit-blog pull-right"><span class="glyphicon glyphicon-pencil">编辑</span></button>
-                <!--<span class="">{{ article.content }}</span>-->
+                    <span class="blog-text-abstract">{{ article.summary }}</span>
+                    <li class="divider"></li>
+                    {% for i in article.content: %}
+                    <p class="blog_text_word">{{i}}</p>
+                    {% endfor %}
+                    
+                    <p class="pull-right"><button type="button" class="btn btn-default btn-xs  edit-blog"><span class="glyphicon glyphicon-pencil">编辑</span></button></p>
+                
             </div>
                 {% endblock %}
-            </div>
+        </div>
             <div class="col-md-4 blog-r">
                 <ul class="clearfix">
                     <li class="blogs-count card">
@@ -79,30 +79,16 @@
         </div>
         <div class="row-fluid" id="blog-talks">
             <div class="col-md-10 card" style="margin:0 auto;">
-                    <p class="divider"></p>
-                    <p class="title" style="font-size: 22px;"><span class="glyphicon glyphicon-comment"></span>评论</p>
-                    <ul class="clearfix">
-                        <li class="divider"></li>
-                        <li class="list-item blog-talks-item">
-                           <span class="col-md-1"><img src="../static/image/user_img.png" /></span>
-                            <span class="blog-talks-conment col-md-11">
-                                <span class="talks-name">haroro</span><br/>
-                                <span class="talks-conment">
-                                    我是评论我是评论我是平路我是评论 我是评论我是评论我是平路我是评 我是评论我是评论我是平路我是评 我是评论我是评论我是平路我是评 我是评论我是评论我是平路我是评 我是评论我是评论我是平路我是评
-                                </span><br/>
-                                <span class="talks-btn pull-right">
-                                    <button class="btn btn-warning"><span class="glyphicon glyphicon-remove-sign">屏蔽</span></button>
-                                    <button class="btn btn-success hidden"><span class="glyphicon glyphicon-ok-sign">恢复</span></button>
-                                    <button class="btn btn-danger"><span class="glyphicon glyphicon-trash">删除</span></button>
-                                    <button class="btn btn-info"><span class="glyphicon glyphicon-comment">回复</span></button>
-                                </span><br/>
-                                <span class="talks-to-talks hidden">
-                                    <textarea class="form-control" placeholder="回复："   rows="3"></textarea>
-                                </span>
-                                
-                            </span>
-                        </li>
+                    <p class="title" style="font-size: 22px;">&nbsp;<span class="glyphicon glyphicon-comment"></span>评论</p>
+                    <ul class="blog-talks-ul clearfix">
+                        
+                        
                     </ul>
+                    <p class="blog-talks-all pull-right hidden">
+                        <a class="talks-out btn btn-default">展开全部</a>
+                        <a class="talks-in btn btn-default hidden">收起</a>
+                        
+                    </p>
             </div>
             
         </div>
@@ -112,6 +98,9 @@
         </div>
 </body>
 <script>
-
+    var url = window.location.href;
+    var index = url.lastIndexOf("\/");
+    var article_id = url.substring(index + 1, url.length);
+    blog_comment(article_id)
 </script>
 </html>
