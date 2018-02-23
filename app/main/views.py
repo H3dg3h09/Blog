@@ -62,6 +62,8 @@ def get_article_list():
     res = []
 
     for i in data.items:
+        num_of_comment = Comment.query.filter(Comment.article_id == i.id).count()
+
         one = {
             'id': i.id,
             'title': i.title,
@@ -71,6 +73,7 @@ def get_article_list():
             'update_time': i.update_time,
             'type_name': i.type_name,
             'source_name': i.source_name,
+            'num_of_comment': num_of_comment,
         }
         res.append(one)
     dic_res = {'data': res,
