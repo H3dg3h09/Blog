@@ -195,7 +195,7 @@ $(function(){
             $(ele).removeClass('hidden');
         })
         $('.talks-out').addClass('hidden');
-        $('talks-in').removeClass('hidden')
+        $('.talks-in').removeClass('hidden')
     })
     //收起评论
     $('body').on('click','.talks-in',function(){
@@ -203,6 +203,6 @@ $(function(){
             $(ele).addClass('hidden')
         })
         $('.talks-in').addClass('hidden');
-        $('talks-out').removeClass('hidden')
+        $('.talks-out').removeClass('hidden')
     })
 })
