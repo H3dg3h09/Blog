@@ -188,15 +188,21 @@ function blog_comment(article_id){
         }
     })
 }
-//展开评论
-$('body').on('click','.talks-out',function(){
-    $('.blog-talks-ul .blog-talks-item').removeClass('hidden');
-    $('.talks-out').addClass('hidden');
-    $('talks-in').removeClass('hidden')
-})
-//收起评论
-$('body').on('click','.talks-in',function(){
-    $('.blog-talks-ul .blog-talks-item:gt(4)').addClass('hidden')
-    $('.talks-in').addClass('hidden');
-    $('talks-out').removeClass('hidden')
+$(function(){
+    //展开评论
+    $('body').on('click','.talks-out',function(e){
+        $('.blog-talks-ul .blog-talks-item').each(function(idx,ele){
+            $(ele).removeClass('hidden');
+        })
+        $('.talks-out').addClass('hidden');
+        $('talks-in').removeClass('hidden')
+    })
+    //收起评论
+    $('body').on('click','.talks-in',function(){
+        $('.blog-talks-ul .blog-talks-item:gt(4)').each(function(idx,ele){
+            $(ele).addClass('hidden')
+        })
+        $('.talks-in').addClass('hidden');
+        $('talks-out').removeClass('hidden')
+    })
 })
