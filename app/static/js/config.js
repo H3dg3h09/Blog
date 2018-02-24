@@ -159,7 +159,7 @@ function blog_comment(article_id){
             $.each(res.data,function(idx,ele){
                 strLi += 
                 '<li class="divider"></li>'+
-                '<li class="blog-talks-item clearfix">'+
+                '<li class="blog-talks-item clearfix" data-talks-id="'+ele.id+'">'+
                 '<span class="col-md-1"><img src="../static/image/user_img.png" /></span>'+
                 '<span class="blog-talks-conment col-md-11">'+
                      '<span class="talks-name">'+ele.username+'</span><br/>'+
