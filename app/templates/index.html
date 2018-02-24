@@ -10,10 +10,11 @@
     <script src="../static/js/jquery.min.js"></script>
     <script src="../static/js/bootstrap.min.js"></script>
     <script src="../static/js/bootstrap-paginator.js"></script>
+    <script src="../static/js/layer.js"></script>
     <script src="../static/js/md5.js"></script>
     <script src="../static/js/header.js"></script>
     <script src="../static/js/config.js"></script>
-     <!--<script src="../static/js/public.js"></script>-->
+     <script src="{{ url_for('static',filename='js/public.js')}}"></script>
    <!--import '../static/js/public.js'-->
     <!--[if IE9]>
 
@@ -43,70 +44,6 @@
     article_list();
     $('.header').html(headerHTML);
     $('body').append(blogModal)
-    //左侧blog博文
-    var blogText =
-            '<ul>' +
-                '<li class="blog-text-item card">' +
-                    '<p class="blog-text-title">我是标题我是标题我是标题</p>' +
-                    '<div class="blog-text-mark clearfix">' +
-                        '<div class="pull-left">' +
-                            '<span class="label label-warning">原创</span>' +
-                            '<span class="label label-info">生活杂记</span>' +
-                            '<span class="label label-default">2017/01/11</span>' +
-                        '</div>' +
-                        '<div class="pull-right">' +
-                            '<span class="label label-primary">浏览23</span>' +
-                            '<span class="label label-success">评论4</span>' +
-                        '</div>' +
-                    '</div>' +
-                    '<span class="blog-text-abstract">我是内容,都很舒服是凤凰私防护服四月返回撤诉费呼死你楚虽三户市场部艾师傅仇杀队是会死UC和覅发挥不舒服度。</span>' +
-                '</li>' +
-                '<li class="blog-text-item">' +
-                    '<p class="blog-text-title">我是标题我是标题我是标题</p>' +
-                    '<div class="blog-text-mark clearfix">' +
-                        '<div class="pull-left">' +
-                            '<span class="label label-warning">原创</span>' +
-                            '<span class="label label-info">生活杂记</span>' +
-                            '<span class="label label-default">2017/01/11</span>' +
-                        '</div>' +
-                        '<div class="pull-right">' +
-                            '<span class="label label-primary">浏览23</span>' +
-                            '<span class="label label-success">评论4</span>' +
-                        '</div>' +
-                    '</div>' +
-                    '<span class="blog-text-abstract">我是内容,都很舒服是凤凰私防护服四月返回撤诉费呼死你楚虽三户市场部艾师傅仇杀队是会死UC和覅发挥不舒服度。</span>' +
-                '</li>' +
-                '<li class="blog-text-item">' +
-                    '<p class="blog-text-title">我是标题我是标题我是标题</p>' +
-                    '<div class="blog-text-mark clearfix">' +
-                        '<div class="pull-left">' +
-                            '<span class="label label-warning">原创</span>' +
-                            '<span class="label label-info">生活杂记</span>' +
-                            '<span class="label label-default">2017/01/11</span>' +
-                        '</div>' +
-                        '<div class="pull-right">' +
-                            '<span class="label label-primary">浏览23</span>' +
-                            '<span class="label label-success">评论4</span>' +
-                        '</div>' +
-                    '</div>' +
-                    '<span class="blog-text-abstract">我是内容,都很舒服是凤凰私防护服四月返回撤诉费呼死你楚虽三户市场部艾师傅仇杀队是会死UC和覅发挥不舒服度。</span>' +
-                '</li>' +
-                '<li class="blog-text-item">' +
-                    '<p class="blog-text-title">我是标题我是标题我是标题</p>' +
-                    '<div class="blog-text-mark clearfix">' +
-                        '<div class="pull-left">' +
-                            '<span class="label label-warning">原创</span>' +
-                            '<span class="label label-info">生活杂记</span>' +
-                            '<span class="label label-default">2017/01/11</span>' +
-                        '</div>' +
-                        '<div class="pull-right">' +
-                                '<span class="label label-primary">浏览23</span>' +
-                                '<span class="label label-success">评论4</span>' +
-                        '</div>' +
-                    '</div>' +
-                    '<span class="blog-text-abstract">我是内容,都很舒服是凤凰私防护服四月返回撤诉费呼死你楚虽三户市场部艾师傅仇杀队是会死UC和覅发挥不舒服度。</span>' +
-                '</li>' +
-            '</ul>';
     var blog_count =
             '<ul>' +
                 '<li class="blogs-count card">' +

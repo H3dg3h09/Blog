@@ -23,7 +23,7 @@
             <div class="col-md-8 blog-l">
                 {% block article %}
                 <div class="card" style="padding-bottom:40px;">
-                    <p class="blog-text-title"></p>{{ article.title }}</p>
+                    <p class="blog-text-title">{{ article.title }}</p>
                     <a class="hidden" id="article_id">{{ article.id }}</a>
                     <div class="blog-text-mark clearfix">
                         <div class="pull-left">
@@ -35,7 +35,7 @@
                         </div>
                         <div class="pull-right">
                             <span class="label label-primary">浏览{{ article.num_of_view }}</span>
-                            <span class="label label-success">评论4</span>
+                            <span class="label label-success">评论{{ article.num_of_comment }}</span>
                         </div>
                     </div>
                     <span class="blog-text-abstract">{{ article.summary }}</span>

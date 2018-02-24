@@ -103,9 +103,7 @@ function article_list(){
                                     }else{
                                         layer.msg('没有更多数据了！')
                                     }
-                                     
-
-                                    }
+                                }
                             })
                         }
                 });
@@ -134,7 +132,7 @@ function append_blog_list(data,type){
                     '</div>' +
                     '<div class="pull-right">' +
                         '<span class="label label-primary">浏览'+ele.view_num+'</span>' +
-                        '<span class="label label-success">评论4</span>' +
+                        '<span class="label label-success">评论'+ele.num_of_comment+'</span>' +
                     '</div>' +
                 '</div>' +
                 '<span class="blog-text-abstract">'+ele.summary+'</span>' +
