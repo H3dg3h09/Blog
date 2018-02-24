@@ -9,6 +9,7 @@ from ..models import ArticleType, Article, User, Source,\
 from .form import SignInForm, ChangePwdForm, CommonForm, LoginForm
 from .. import db, login_manager
 
+
 #
 # @main.route('/')
 # def home_page():
@@ -49,8 +50,10 @@ def get_article_list():
                             Article.create_time, Article.update_time, Article.id,
                             Article.num_of_view,
                             ArticleType.name.label('type_name'),
-                            Source.name.label('source_name'))
-
+                            Source.name.label('source_name')).\
+        join(ArticleType, ArticleType.id == Article.articleType_id, isouter=True).\
+        join(Source, Source.id == Article.source_id, isouter=True)
+    
     if article_type:
         data = data.filter(Article.articleType_id == article_type)
     if article_source:
@@ -78,7 +81,7 @@ def get_article_list():
         res.append(one)
     dic_res = {'data': res,
                'currentPage':data.page,
-               'totalPages': data.total}
+               'totalPages': data.total/current_app.config['ARTICLES_PER_PAGE']}
     return jsonify(dic_res)
 
 
@@ -92,7 +95,6 @@ def get_article(article_id):
     else:
         return redirect('/')
 
-    # article_id = request.args.get('article_id')
     com = db.session.query(Comment.content, Comment.timestamp, Comment.avatar_hash, User.username).join(User,
                                                                                                          User.id == Comment.author_id,
                                                                                                          isouter=True).filter(

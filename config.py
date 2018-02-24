@@ -6,14 +6,15 @@ os.environ['WEB_RUL'] = 'http://127.0.0.1'
 os.environ['WEB_PORT'] = '5000'
 
 class Config():
-    # DEBUG = True
+    DEBUG = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_RECORD_QUERIES = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'data.sqlite')
-    print('config'+os.environ.get('DATABASE_URL', ''))
-    ARTICLES_PER_PAGE = 10
-    COMMENTS_PER_PAGE = 6
+
+    ARTICLES_PER_PAGE = 5
+    COMMENTS_PER_PAGE = 5
+
     @staticmethod
     def init_app(app):
         pass
